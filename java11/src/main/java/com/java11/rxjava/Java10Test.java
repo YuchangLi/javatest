@@ -5,9 +5,6 @@ import java.util.ArrayList;
 public class Java10Test {
   public static void main(String[] args) {
 //    var();
-    var i = 0;
-    String var = "str";
-    
   }
 
   private static void var() {
