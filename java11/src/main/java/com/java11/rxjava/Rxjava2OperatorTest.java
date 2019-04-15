@@ -21,7 +21,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class Rxjava2OperatorTest {
   public static void main(String[] args) {
-//    create();
+    create();
 //    map();
 //    zip();
 //    concat();
@@ -36,7 +36,7 @@ public class Rxjava2OperatorTest {
 //    defer();
 //    merge();
 //    reduce();
-    window();
+//    window();
   }
   static void create() {
     System.out.println(Thread.currentThread().getId()+",name "+Thread.currentThread().getName()+" start : " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) );
@@ -48,21 +48,29 @@ public class Rxjava2OperatorTest {
           e.onNext(1);
           System.out.print("Observable emit 2" + "\n");
           e.onNext(2);
-          System.out.print("Observable emit 3" + "\n");
-          e.onNext(3);
-          e.onComplete();
-          System.out.print("Observable emit 4" + "\n" );
-          e.onNext(4);
+//          System.out.print("Observable emit 3" + "\n");
+//          e.onNext(3);
+//          e.onComplete();
+//          System.out.print("Observable emit 4" + "\n" );
+//          e.onNext(4);
       }
     })
-    .subscribeOn(Schedulers.newThread())
+    .subscribeOn(Schedulers.computation())
     .observeOn(Schedulers.newThread())
+    .doOnNext(new Consumer<Integer>() {
+        @Override
+        public void accept(@NonNull Integer integer) throws Exception {
+          System.out.println(Thread.currentThread().getId()+",name "+Thread.currentThread().getName()+" doOnNext : " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) );
+        }
+    })
+    .observeOn(Schedulers.io())
     .subscribe(new Observer<Integer>() {
         private int i;
         private Disposable mDisposable;
   
         @Override
         public void onSubscribe(@NonNull Disposable d) {
+          System.out.println(Thread.currentThread().getId()+",name "+Thread.currentThread().getName()+" onSubscribe : " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) );
             System.out.print("onSubscribe, isDisposed : " + d.isDisposed() + "\n" );
             mDisposable = d;
         }
