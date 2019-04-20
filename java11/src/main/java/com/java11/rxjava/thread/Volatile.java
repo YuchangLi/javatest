@@ -19,7 +19,8 @@ public class Volatile extends Object implements Runnable {
       print("entering run()");  
 
       //循环检查value的值是否不同  
-      while ( value < 20 ) {  
+      while ( value < 20 ) { 
+//        System.out.println("in while");
           //如果missedIt的值被修改为true，则通过break退出循环  
           if  ( missedIt ) {  
               //进入同步代码块前，将value的值赋给currValue  
@@ -49,7 +50,7 @@ public class Volatile extends Object implements Runnable {
       value = 50;  
       print("in workMethod() - just set value=" + value);  
       print("in workMethod() - about to sleep for 5 seconds");  
-      Thread.sleep(5000);  
+//      Thread.sleep(5000);  sleep或不sleep Thred0线程都会立即感应到value值变化
       //仅在此改变missedIt的值  
       missedIt = true;  
       print("in workMethod() - just set missedIt=" + missedIt);  

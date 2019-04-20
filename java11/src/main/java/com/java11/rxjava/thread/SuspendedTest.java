@@ -12,6 +12,7 @@ class MySuspendedThread implements Runnable{
 } 
 
 public class SuspendedTest {
+  @SuppressWarnings("deprecation")
   public static void main(String[] args) {
     Runnable run = new MySuspendedThread();
     Thread t = new Thread(run, "t1");
