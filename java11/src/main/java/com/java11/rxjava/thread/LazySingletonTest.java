@@ -31,7 +31,7 @@ class LazySingleton {
       if (instance == null) {// (2)  
         System.out.println(Thread.currentThread().getName()+" into synchronized");
           synchronized(LazySingletonTest.class) {               // (3)  
-              if (instance == null) {                       // (4)  
+              if (instance == null) {    // (4)  
                   instance = new LazySingleton();           // (5)  
               }  
           }  
