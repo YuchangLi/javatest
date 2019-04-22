@@ -60,7 +60,7 @@ public class ExecutorUtil {
   
   public static void main(String[] args) throws InterruptedException, ExecutionException {
     long t1 = System.currentTimeMillis();
-    ScheduledFuture<?> future = schedule("test", ()->{System.out.println("ok "+(System.currentTimeMillis()-t1));}, 5, TimeUnit.SECONDS);
+    ScheduledFuture<?> future = schedule("test", ()->{System.out.println("ok "+(System.currentTimeMillis()-t1));int i = 1/0;}, 5, TimeUnit.SECONDS);
 //    future.cancel(true);
     System.out.println(future.getClass());
     System.out.println(tackMap.size());

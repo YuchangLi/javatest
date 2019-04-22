@@ -12,7 +12,8 @@ public class CallableAndFuture {
       Future<String> future = executor.submit(new Callable<String>() {   //接受一上callable实例
           public String call() throws Exception {
             System.out.println(Thread.currentThread().getName()+", in call, sleep 1 seconds");
-            Thread.sleep(1000);
+            Thread.sleep(2000);
+            int i = 1/0;
              return "MOBIN";
           }
       });
