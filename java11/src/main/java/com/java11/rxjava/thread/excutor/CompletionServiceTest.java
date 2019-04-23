@@ -28,7 +28,10 @@ public class CompletionServiceTest {
             }
         });
     }
-    System.out.println(completionService.take().get());   //获取执行结果
+    for (int i =1; i <=10; i ++) {
+      System.out.println(completionService.take().get()); //获取执行结果
+    }
     System.out.println("in main");   //获取执行结果
+    executor.shutdown();
   }
 }

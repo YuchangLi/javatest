@@ -53,8 +53,10 @@ public class DeadlockTest {
       e.printStackTrace();
     }
     try {
-      System.out.println("o1 wait lock");
-      t1.interrupt();
+//      System.out.println("o1 try interrupt");
+//      t1.interrupt();
+//      t2.interrupt();
+//      System.out.println("o1 interrupt success");
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

@@ -3,6 +3,7 @@ package com.java11.rxjava.productConsumeModel;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
+// 一组线程执行完后在执行主线程, 可复用
 public class CyclicBarrierTest {
   public static void main(String[] args) {
     // 创建CyclicBarrier对象，
@@ -13,6 +14,17 @@ public class CyclicBarrierTest {
     new SubTask("C", cb).start();
     new SubTask("D", cb).start();
     new SubTask("E", cb).start();
+    try {
+      Thread.sleep(200);
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    new SubTask("A1", cb).start();
+    new SubTask("B2", cb).start();
+    new SubTask("C3", cb).start();
+    new SubTask("D4", cb).start();
+    new SubTask("E5", cb).start();
     // 多或少都会使主线程blocking
 //    new SubTask("F", cb).start();
   }
@@ -46,14 +58,15 @@ class SubTask extends Thread {
     // 模拟耗时的任务
 //    for (int i = 0; i < 999999; i++); 
     try {
-      Thread.sleep(1000);
+      Thread.sleep(100);
     } catch (InterruptedException e1) {
       e1.printStackTrace();
     }
-    System.out.println("[并发任务" + name + "]  开始执行完毕，通知障碍器");
+    System.out.println("[并发任务" + name + "] is waiting on barrier，通知障碍器");
     try {
       // 每执行完一项任务就通知障碍器
       cb.await();
+      System.out.println("[并发任务" + name + "] crossed the barrier");
     } catch (InterruptedException e) {
       e.printStackTrace();
     } catch (BrokenBarrierException e) {
