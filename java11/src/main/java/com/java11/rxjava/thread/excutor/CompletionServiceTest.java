@@ -35,6 +35,5 @@ public class CompletionServiceTest {
     }
     System.out.println("in main");   //获取执行结果
     executor.shutdown();
-    System.out.println(Runtime.getRuntime().availableProcessors());   //获取执行结果
   }
 }

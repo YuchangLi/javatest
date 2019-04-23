@@ -3,6 +3,7 @@ package com.java11.rxjava.productConsumeModel;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 
+// 阻塞栈 FILO
 public class BlockingDequeTest {
   public static void main(String[] args) throws InterruptedException {   
     BlockingDeque<String> bDeque = new LinkedBlockingDeque<String>(20);   

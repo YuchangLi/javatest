@@ -4,12 +4,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
+// 信号并发下只有抢到信号的线程才能执行
 public class SemaphoreTest {
   public static void main(String[] args) {
     // 采用新特性来启动和管理线程——内部使用线程池
     ExecutorService exec = Executors.newCachedThreadPool();
     // 只允许5个线程同时访问
-    final Semaphore semp = new Semaphore(3);
+    final Semaphore semp = new Semaphore(2);
     // 模拟10个客户端访问
     for (int index = 0; index < 3; index++) {
       final int num = index;

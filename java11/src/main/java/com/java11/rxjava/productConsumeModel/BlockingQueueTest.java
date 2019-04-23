@@ -3,6 +3,7 @@ package com.java11.rxjava.productConsumeModel;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+//阻塞队列 FIFO
 public class BlockingQueueTest {
   public static void main(String[] args) throws InterruptedException {
     BlockingQueue<String> bqueue = new ArrayBlockingQueue<String>(20);   

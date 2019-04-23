@@ -92,7 +92,12 @@ public class ReentrantLockModel {
           e.printStackTrace();
         }
       }
-    }, "consumer") ;
+    }, ""
+        + ""
+        + ""
+        + ""
+        + ""
+        + "") ;
     consumer.start();
   }
 }
