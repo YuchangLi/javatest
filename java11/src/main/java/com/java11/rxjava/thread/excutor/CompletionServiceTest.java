@@ -11,6 +11,7 @@ import java.util.concurrent.Executors;
 /**
  * @ClassName: CompletionServiceTest
  * @Description: 实现了CompletionService，将执行完成的任务放到阻塞队列中，通过take或poll方法来获得执行结果 例4：（启动10条线程，谁先执行完成就返回谁）
+ * 
  * @author liyuchang
  * @date 2019年4月21日
  */
@@ -23,13 +24,14 @@ public class CompletionServiceTest {
       completionService.submit(new Callable() {
             public Object call() throws Exception {
               System.out.println(Thread.currentThread().getName()+" in call");
-                Thread.sleep(new Random().nextInt(5000));   //让当前线程随机休眠一段时间
+                Thread.sleep(new Random().nextInt(50));   //让当前线程随机休眠一段时间
                 return result;
             }
         });
     }
+    // completionService.take() 执行和前面相同的次数获取所有结果
     for (int i =1; i <=10; i ++) {
-      System.out.println(completionService.take().get()); //获取执行结果
+      System.out.println(i + "， result = "+completionService.take().get()); //获取执行结果
     }
     System.out.println("in main");   //获取执行结果
     executor.shutdown();
