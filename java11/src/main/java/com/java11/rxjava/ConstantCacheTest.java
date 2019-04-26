@@ -2,8 +2,8 @@ package com.java11.rxjava;
 
 public class ConstantCacheTest {
   public static void main(String[] args) {
-//    stringTest();
-    intTest();
+    stringTest();
+//    intTest();
   }
 
   private static void stringTest() {
@@ -22,7 +22,14 @@ public class ConstantCacheTest {
     System.out.println(str3 == str4);//false
     System.out.println(str3 == str5);//true
     System.out.println(str4 == str5);//false
+    System.out.println(str3 == ("stri"+"ng"));//false
     System.out.println("===================");
+    String t1 = "x";
+    String t2 = t1+t1;
+    String t3 = t1.intern()+t1.intern();
+    System.out.println("xx" == ("x"+"x"));
+    System.out.println("xx" == t2);
+    System.out.println("xx" == t3);
   }
 
   private static void intTest() {
