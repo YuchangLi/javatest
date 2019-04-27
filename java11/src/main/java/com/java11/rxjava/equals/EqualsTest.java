@@ -12,11 +12,13 @@ public class EqualsTest {
 //    int result = 1;
 //    result = prime * result + id;
 //    return result;
-    return super.hashCode();
+    return 1;
+//    return super.hashCode();
   }
 
   @Override
   public boolean equals(Object obj) {
+    System.out.println("equals");
     if (this == obj)
       return true;
     if (obj == null)
@@ -26,17 +28,21 @@ public class EqualsTest {
     EqualsTest other = (EqualsTest) obj;
     if (id != other.id)
       return false;
-    return true;
+    return false;
   }
 
   public static void main(String[] args) {
     EqualsTest t1 = new EqualsTest();
+    t1.id=1;
     EqualsTest t2 = new EqualsTest();
+    t2.id=2;
     System.out.println(t1.hashCode());
     System.out.println(t2.hashCode());
     Map<EqualsTest, String> map = new HashMap<>();
     map.put(t1, "1");
     map.put(t2, "2");
     System.out.println(map.size());
+    System.out.println("t1 = "+map.get(t1));
+    System.out.println("t2 = "+map.get(t2));
   }
 }
