@@ -7,17 +7,18 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.request.RequestContextListener;
 
+/**
+ * @ClassName: GreenwichWebApplication
+ * @Description: TODO(这里用一句话描述这个类的作用)
+ * @author liyuchang
+ * @date 2019年4月30日
+ */
 @SpringBootApplication
 @RestController
 @Configuration
@@ -33,8 +34,13 @@ public class GreenwichWebApplication {
 //  }
 }
 
+/**
+ * @ClassName: UserService
+ * @Description: TODO(这里用一句话描述这个类的作用)
+ * @author liyuchang
+ * @date 2019年4月30日
+ */
 @Component
-//@Scope(value = WebApplicationContext.SCOPE_REQUEST)
 class UserService {
   String getUserName() {
     return "username";
@@ -46,6 +52,9 @@ class UserService {
 class UserController {
   System.Logger logger = System.getLogger(getClass().getName());
   
+  /**
+   * userService
+   */
   @Autowired
   UserService userService;
   
