@@ -22,61 +22,68 @@ public class CountDownLatchTest {
       System.out.println(Thread.currentThread().getName()+", doing start");
       try {
         Thread.sleep(2000);
+        if(true)
+        throw new RuntimeException("runtimeexception");
         System.out.println(Thread.currentThread().getName()+", doing end");
         count.countDown();
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
     }, "t2");
+    t2.setUncaughtExceptionHandler((t, e)->{
+      System.out.println(Thread.currentThread().getName()+", run error, msg = "+e.getMessage());
+      count.countDown();
+    });
     t2.start();
-    Thread t3 = new Thread(()-> {
-      System.out.println(Thread.currentThread().getName()+", doing start");
-      try {
-        count.await();
-      } catch (Exception e1) {
-        e1.printStackTrace();
-      }
-      try {
-        Thread.sleep(300);
-        System.out.println(Thread.currentThread().getName()+", doing end");
-        count.countDown();
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-    }, "t3");
-    t3.start();
-//    count.await();
-    System.out.println("main running end");
-    Thread.sleep(3000);
-
-
-    Thread t4 = new Thread(()-> {
-      System.out.println(Thread.currentThread().getName()+", doing start");
-      try {
-        Thread.sleep(1000);
-        System.out.println(Thread.currentThread().getName()+", doing end");
-        count.countDown();
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-    }, "t4");
-    t4.start();
     
-    Thread t5 = new Thread(()-> {
-      System.out.println(Thread.currentThread().getName()+", doing start");
-      try {
-        count.await();
-      } catch (Exception e1) {
-        e1.printStackTrace();
-      }
-      try {
-        Thread.sleep(300);
-        System.out.println(Thread.currentThread().getName()+", doing end");
-        count.countDown();
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-    }, "t5");
-    t5.start();
+//    Thread t3 = new Thread(()-> {
+//      System.out.println(Thread.currentThread().getName()+", doing start");
+//      try {
+//        count.await();
+//      } catch (Exception e1) {
+//        e1.printStackTrace();
+//      }
+//      try {
+//        Thread.sleep(300);
+//        System.out.println(Thread.currentThread().getName()+", doing end");
+//        count.countDown();
+//      } catch (InterruptedException e) {
+//        e.printStackTrace();
+//      }
+//    }, "t3");
+//    t3.start();
+    count.await();
+    System.out.println("main running end");
+//    Thread.sleep(3000);
+//
+//
+//    Thread t4 = new Thread(()-> {
+//      System.out.println(Thread.currentThread().getName()+", doing start");
+//      try {
+//        Thread.sleep(1000);
+//        System.out.println(Thread.currentThread().getName()+", doing end");
+//        count.countDown();
+//      } catch (InterruptedException e) {
+//        e.printStackTrace();
+//      }
+//    }, "t4");
+//    t4.start();
+//    
+//    Thread t5 = new Thread(()-> {
+//      System.out.println(Thread.currentThread().getName()+", doing start");
+//      try {
+//        count.await();
+//      } catch (Exception e1) {
+//        e1.printStackTrace();
+//      }
+//      try {
+//        Thread.sleep(300);
+//        System.out.println(Thread.currentThread().getName()+", doing end");
+//        count.countDown();
+//      } catch (InterruptedException e) {
+//        e.printStackTrace();
+//      }
+//    }, "t5");
+//    t5.start();
   }
 }
