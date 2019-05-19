@@ -99,5 +99,6 @@
   <modules>
     <module>springboot_dubbo_api</module>
     <module>springboot_dubbo_consumer</module>
+    <module>springboot_dubbo_provider</module>
   </modules>
 </project>

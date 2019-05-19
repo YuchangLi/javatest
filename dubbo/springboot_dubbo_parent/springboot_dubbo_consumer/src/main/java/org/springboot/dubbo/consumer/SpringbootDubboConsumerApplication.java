@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 public class SpringbootDubboConsumerApplication {
-  @Reference(version = "${demo.service.version}")
-  private DemoService demoService;
+    @Reference(version = "${demo.service.version}")
+    private DemoService demoService;
 
-  public static void main(String[] args) {
-      SpringApplication.run(SpringbootDubboConsumerApplication.class);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(SpringbootDubboConsumerApplication.class);
+    }
 
-  @GetMapping("/name")
-  public String name(String name) {
-    return this.demoService.sayHello(name);
-  }
+    @GetMapping("/name")
+    public String name(String name) {
+        return this.demoService.sayHello(name);
+    }
 }

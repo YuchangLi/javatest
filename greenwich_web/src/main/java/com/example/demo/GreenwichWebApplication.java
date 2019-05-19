@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import java.lang.System.Logger.Level;
+//import java.lang.System.Logger.Level;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,7 +48,7 @@ class UserService {
 @RestController
 @RequestMapping("/user")
 class UserController {
-  System.Logger logger = System.getLogger(getClass().getName());
+//  System.Logger logger = System.getLogger(getClass().getName());
   
   /**
    * userService
@@ -58,11 +58,13 @@ class UserController {
   
   @RequestMapping(value = "/getUser", method = RequestMethod.GET)
   public String getUser(HttpServletRequest request) {
+    /**
     System.out.println(Thread.currentThread().getId()+", userService = "+userService);
     logger.log(Level.INFO,
         "Thread=[" + Thread.currentThread().getId() + ", " + Thread.currentThread().getName()
         + "], ip=" + request.getRemoteAddr() + " host=" + request.getRemoteHost() + " , ruser="
         + request.getRemoteUser());
+*/
     // return "Hello World";
     return userService.getUserName();
   }
