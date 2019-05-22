@@ -7,23 +7,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
+
+@Configuration
+@EnableDubbo(scanBasePackages = "com.liyuchang.dubbo.rest")
+@PropertySource("classpath:/spring/dubbo-rest.properties")
 public class DubboRestApplication {
     public static void main(String[] args) throws Exception {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ProviderConfiguration.class);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DubboRestApplication.class);
         context.start();
         System.in.read();
-    }
-
-    @Configuration
-    @EnableDubbo(scanBasePackages = "com.liyuchang.dubbo.rest")
-    @PropertySource("classpath:/spring/dubbo-rest.properties")
-    static class ProviderConfiguration {
-        @Bean
-        public RegistryConfig registryConfig() {
-            RegistryConfig registryConfig = new RegistryConfig();
-            registryConfig.setAddress("zookeeper://127.0.0.1:2181");
-            return registryConfig;
-        }
     }
 
 }

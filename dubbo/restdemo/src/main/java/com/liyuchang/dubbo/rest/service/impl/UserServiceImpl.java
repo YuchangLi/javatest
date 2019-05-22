@@ -4,10 +4,7 @@ import com.liyuchang.dubbo.rest.entity.User;
 import com.liyuchang.dubbo.rest.service.UserService;
 import org.apache.dubbo.config.annotation.Service;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 @Path("users")
@@ -24,8 +21,9 @@ public class UserServiceImpl implements UserService {
 
     @GET
     @Path("{id : \\d+}")
+    @Produces({MediaType.APPLICATION_JSON})
     @Override
-    public User get(Long id) {
+    public User get(@PathParam("id") Long id) {
         User user = new User();
         user.setId(id);
         user.setName("李玉长");
