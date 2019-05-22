@@ -22,6 +22,6 @@ public class SpringbootDubboConsumerApplication {
 
     @GetMapping("/name")
     public String name(String name) {
-        return this.demoService.sayHello(name);
+        return demoService.sayHello(name);
     }
 }
