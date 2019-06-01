@@ -11,6 +11,7 @@ public class GreenwichWebApplicationTests {
 
 	@Test
 	public void contextLoads() {
+	  System.out.println(String.valueOf(GreenwichWebApplication.class.getName()+" started!"));
 	}
 
 }

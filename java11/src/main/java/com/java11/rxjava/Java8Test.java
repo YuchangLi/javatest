@@ -7,7 +7,9 @@ import java.time.Month;
 
 public class Java8Test {
   public static void main(String[] args) {
-    date();
+//    date();
+    int a;
+    System.out.println((a = 10) == 1);
   }
 
   private static void date() {
