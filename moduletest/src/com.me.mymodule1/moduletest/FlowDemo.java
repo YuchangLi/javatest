@@ -5,6 +5,12 @@ import java.util.Arrays;
 import java.util.concurrent.Flow.*;
 import java.util.concurrent.SubmissionPublisher;
 
+/**
+ * @ClassName: FlowDemo
+ * @Description: TODO(这里用一句话描述这个类的作用)
+ * @author liyuchang
+ * @date 2019年4月30日
+ */
 public class FlowDemo {
   public static void main(String[] args) {
     // Create a publisher.

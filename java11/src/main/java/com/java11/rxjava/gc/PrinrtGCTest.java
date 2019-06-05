@@ -17,7 +17,10 @@ public class PrinrtGCTest {
   }
 
   public static void main(String[] args) {
-    testGC();
-    System.out.println("123");
+//    testGC();
+//    System.out.println("123");
+    int i = 1;
+    int a = ++i;
+    System.out.println(a);
   }
 }

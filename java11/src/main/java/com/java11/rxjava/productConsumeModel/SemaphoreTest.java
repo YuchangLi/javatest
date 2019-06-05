@@ -12,7 +12,7 @@ public class SemaphoreTest {
     // 只允许5个线程同时访问
     final Semaphore semp = new Semaphore(2);
     // 模拟10个客户端访问
-    for (int index = 0; index < 3; index++) {
+    for (int index = 1; index <= 3; index++) {
       final int num = index;
       Runnable run = new Runnable() {
         public void run() {
@@ -24,7 +24,7 @@ public class SemaphoreTest {
             // 模拟耗时的任务
             // for (int i = 0; i < 999999; i++) ;
             try {
-              Thread.sleep(3000);
+              Thread.sleep(8000);
             } catch (InterruptedException e1) {
               e1.printStackTrace();
             }
