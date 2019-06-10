@@ -1,0 +1,2 @@
+2019-06-10 00:59:32,719 WARN [main] c.l.d.l.w.Woo [Woo.java:12] Woo warn
+2019-06-10 00:59:32,719 ERROR [main] c.l.d.l.w.Woo [Woo.java:13] Woo error
