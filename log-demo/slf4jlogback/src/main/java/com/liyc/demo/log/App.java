@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Hello world!
  */
 public class App {
-    static Logger logger = LoggerFactory.getLogger(App.class);
+    static  Logger logger = LoggerFactory.getLogger(App.class);
 
     public static void main(String[] args) {
 //        LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
@@ -18,7 +18,11 @@ public class App {
         logger.debug("debug");
         logger.info("info");
         logger.warn("warn");
-        logger.error("error = {},{},{},{}", 1, 2, 3, 4);
+        try {
+            int i = 1/0;
+        } catch (Exception e) {
+            logger.error("error = {},{},{},{}", 1, 2, 3, 4, e);
+        }
         Foo foo  = new Foo();
         foo.doIt();
         Woo woo  = new Woo();
