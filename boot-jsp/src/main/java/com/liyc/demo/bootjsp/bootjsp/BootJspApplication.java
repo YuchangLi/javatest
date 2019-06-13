@@ -30,6 +30,7 @@ public class BootJspApplication {
 
             log.info("index jsp1");
             model.addAttribute("name", "lyc");
+            model.addAttribute("shareChannels", EnumShareChannel.values());
 //            ModelAndView view = new ModelAndView("index");
 //            view.addObject("pwd", "111");
             return "index";
