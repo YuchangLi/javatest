@@ -1,0 +1,4 @@
+#spring.application.name=thread-local-demo
+spring:
+  application:
+    name: thread-local-demo
