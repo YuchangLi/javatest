@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <dubbo.version>2.7.1</dubbo.version>
+        <dubbo.version>2.7.15</dubbo.version>
         <dubbo.rpc.version>2.7.1</dubbo.rpc.version>
         <swagger.version>1.5.19</swagger.version>
     </properties>
