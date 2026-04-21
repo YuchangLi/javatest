@@ -32,6 +32,7 @@ public class DelayQueueTest {
         @Override
         public long getDelay(TimeUnit unit) {
             long remaining = expireTime - System.currentTimeMillis();
+            System.out.println("remaining: "+remaining);
             return unit.convert(remaining, TimeUnit.MILLISECONDS);
         }
 
