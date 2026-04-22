@@ -59,11 +59,11 @@ public class TtlContextHolder {
 //        System.out.println("\n========== 测试3: TTL 在任务提交时捕获上下文(核心特性) ==========\n");
 //        testCaptureAtSubmitTime();
 
-        System.out.println("\n========== 测试4: 父线程修改上下文，已运行的子线程能否感知? ==========\n");
-        testModifyContextWithoutResubmit();
+//        System.out.println("\n========== 测试4: 父线程修改上下文，已运行的子线程能否感知? ==========\n");
+//        testModifyContextWithoutResubmit();
 
-//        System.out.println("\n========== 测试5: TTL 支持异步嵌套传递 ==========\n");
-//        testNestedAsync();
+        System.out.println("\n========== 测试5: TTL 支持异步嵌套传递 ==========\n");
+        testNestedAsync();
 
         // 关闭线程池
         TTL_EXECUTOR_SERVICE.shutdown();
