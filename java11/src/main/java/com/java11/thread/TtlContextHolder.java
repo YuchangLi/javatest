@@ -56,10 +56,13 @@ public class TtlContextHolder {
 //        System.out.println("\n========== 测试2: 三种 ThreadLocal 在手动创建线程中的对比 ==========\n");
 //        testThreeThreadLocalsInManualThread();
 //
-        System.out.println("\n========== 测试3: TTL 在任务提交时捕获上下文(核心特性) ==========\n");
-        testCaptureAtSubmitTime();
-//
-//        System.out.println("\n========== 测试4: TTL 支持异步嵌套传递 ==========\n");
+//        System.out.println("\n========== 测试3: TTL 在任务提交时捕获上下文(核心特性) ==========\n");
+//        testCaptureAtSubmitTime();
+
+        System.out.println("\n========== 测试4: 父线程修改上下文，已运行的子线程能否感知? ==========\n");
+        testModifyContextWithoutResubmit();
+
+//        System.out.println("\n========== 测试5: TTL 支持异步嵌套传递 ==========\n");
 //        testNestedAsync();
 
         // 关闭线程池
@@ -182,6 +185,74 @@ public class TtlContextHolder {
         future33.get();
 
         log.info("\n说明: TTL 在每次 submit 时捕获当前上下文，实现按需传递，而不是在线程创建时一次性传递, ITL修改不能传递到已存在的子线程中");
+    }
+
+    /**
+     * 关键问题: 父线程修改上下文后，不重新提交任务，已经在运行的子线程能否看到修改?
+     * 答案: 不能！因为 TTL 在 submit 时就捕获了快照，子线程运行的是捕获的快照副本
+     */
+    private static void testModifyContextWithoutResubmit() throws Exception {
+        // 设置初始上下文
+        TTL_CONTEXT.set("initial-value");
+        ITL_CONTEXT.set("itl-initial-value");
+        log.info("[主线程] 设置初始上下文: TTL={}, ITL={}", TTL_CONTEXT.get(), ITL_CONTEXT.get());
+
+        // 提交一个长时间运行的任务到 TTL 线程池
+        log.info("\n--- 提交长时任务到 TTL 线程池 ---");
+        Future<?> ttlFuture = TTL_EXECUTOR_SERVICE.submit(() -> {
+            log.info("[TTL子线程] 开始执行，读取上下文: {}", TTL_CONTEXT.get());
+
+            // 模拟业务处理，等待父线程修改上下文
+            try {
+                log.info("[TTL子线程] 等待 2 秒，让父线程修改上下文...");
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
+            // 再次读取上下文
+            log.info("[TTL子线程] 等待后再次读取上下文: {}", TTL_CONTEXT.get());
+            log.info("[TTL子线程] 是否能读到父线程的修改? {}", 
+                    "initial-value".equals(TTL_CONTEXT.get()) ? "❌ 不能，还是旧值" : "✅ 能，读到新值");
+        });
+
+        // 提交一个长时间运行的任务到普通线程池（ITL）
+        log.info("\n--- 提交长时任务到普通线程池(ITL) ---");
+        Future<?> itlFuture = RAW_EXECUTOR_SERVICE.submit(() -> {
+            log.info("[ITL子线程] 开始执行，读取上下文: {}", ITL_CONTEXT.get());
+
+            // 模拟业务处理，等待父线程修改上下文
+            try {
+                log.info("[ITL子线程] 等待 2 秒，让父线程修改上下文...");
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
+            // 再次读取上下文
+            log.info("[ITL子线程] 等待后再次读取上下文: {}", ITL_CONTEXT.get());
+            log.info("[ITL子线程] 是否能读到父线程的修改? {}", 
+                    "itl-initial-value".equals(ITL_CONTEXT.get()) ? "❌ 不能，还是旧值" : "✅ 能，读到新值");
+        });
+
+        // 等待子线程启动并读取初始值
+        Thread.sleep(500);
+
+        // 父线程修改上下文
+        log.info("\n[主线程] 修改上下文为: ttl-modified-value 和 itl-modified-value");
+        TTL_CONTEXT.set("ttl-modified-value");
+        ITL_CONTEXT.set("itl-modified-value");
+        log.info("[主线程] 修改完成，当前上下文: TTL={}, ITL={}", TTL_CONTEXT.get(), ITL_CONTEXT.get());
+
+        // 等待子线程执行完毕
+        ttlFuture.get();
+        itlFuture.get();
+
+        log.info("\n结论:");
+        log.info("  ❌ 子线程无法感知父线程的修改，因为 TTL/ITL 在传递时是值拷贝（快照）");
+        log.info("  📌 TTL 在 submit() 时捕获快照，子线程操作的是副本");
+        log.info("  📌 ITL 在线程创建时继承值，也是副本");
+        log.info("  ⚠️ 如果需要双向通信，需要使用共享变量（如 ConcurrentHashMap、AtomicReference 等）");
     }
     
     /**
