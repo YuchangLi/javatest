@@ -52,3 +52,6 @@ build/
 /dist/
 /nbdist/
 /.nb-gradle/
+
+
+.vscode
