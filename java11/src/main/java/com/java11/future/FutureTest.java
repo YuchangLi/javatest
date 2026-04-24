@@ -8,17 +8,17 @@ public class FutureTest {
         System.out.println("========== 测试1: 基本 Future 使用 ==========\n");
         testBasicFuture();
 
-        System.out.println("\n========== 测试2: Future 超时控制 ==========\n");
-        testFutureTimeout();
-
-        System.out.println("\n========== 测试3: Future 异常处理 ==========\n");
-        testFutureException();
-
-        System.out.println("\n========== 测试4: CompletableFuture 链式调用 ==========\n");
-        testCompletableFutureChain();
-
-        System.out.println("\n========== 测试5: CompletableFuture 组合 ==========\n");
-        testCompletableFutureCombine();
+//        System.out.println("\n========== 测试2: Future 超时控制 ==========\n");
+//        testFutureTimeout();
+//
+//        System.out.println("\n========== 测试3: Future 异常处理 ==========\n");
+//        testFutureException();
+//
+//        System.out.println("\n========== 测试4: CompletableFuture 链式调用 ==========\n");
+//        testCompletableFutureChain();
+//
+//        System.out.println("\n========== 测试5: CompletableFuture 组合 ==========\n");
+//        testCompletableFutureCombine();
     }
 
     /**
@@ -34,8 +34,8 @@ public class FutureTest {
         });
         
         System.out.println("主线程继续执行...");
-        String result = future.get();
-        System.out.println("获取到结果: " + result);
+//        String result = future.get();
+//        System.out.println("获取到结果: " + result);
         
         executor.shutdown();
     }
