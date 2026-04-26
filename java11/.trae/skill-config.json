@@ -1,5 +1,3 @@
 {
-  "disabledSkills": [
-    "git-commit-skill"
-  ]
+  "disabledSkills": []
 }
