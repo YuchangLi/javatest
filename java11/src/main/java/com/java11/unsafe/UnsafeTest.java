@@ -121,7 +121,7 @@ public class UnsafeTest {
         obj.intValue = 0;
         Thread writer = new Thread(() -> {
             try {
-                TimeUnit.MILLISECONDS.sleep(100);
+                TimeUnit.MILLISECONDS.sleep(3000);
                 unsafe.putInt(obj, intValueOffset, 1);
                 unsafe.storeFence();
                 System.out.println("写线程: 设置值为 1 (带 storeFence)");
@@ -134,6 +134,12 @@ public class UnsafeTest {
             while (true) {
                 unsafe.loadFence();
                 int val = unsafe.getInt(obj, intValueOffset);
+//                System.out.println("read val = " + val);
+//                try {
+//                    TimeUnit.MILLISECONDS.sleep(500);
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
                 if (val == 1) {
                     System.out.println("读线程: 读取到值 1 (带 loadFence)");
                     break;
