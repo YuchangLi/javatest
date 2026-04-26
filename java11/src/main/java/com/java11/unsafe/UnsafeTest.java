@@ -28,6 +28,7 @@ public class UnsafeTest {
         testObjectFieldOperations();
         testCASOperation();
         testParkUnpark();
+        testMemoryBarrier();
     }
 
     private static void testDirectMemory() {
@@ -92,5 +93,57 @@ public class UnsafeTest {
         System.out.println("主线程调用 park 阻塞");
         unsafe.park(false, 0L);
         System.out.println("主线程被唤醒，继续执行");
+    }
+
+    private static void testMemoryBarrier() throws InterruptedException, NoSuchFieldException {
+        System.out.println("\n=== 内存屏障测试 ===");
+
+        TestObject obj = new TestObject();
+        long intValueOffset = unsafe.objectFieldOffset(TestObject.class.getDeclaredField("intValue"));
+
+        System.out.println("测试 loadFence (读屏障)");
+        unsafe.putInt(obj, intValueOffset, 42);
+        unsafe.loadFence();
+        System.out.println("读取值: " + unsafe.getInt(obj, intValueOffset));
+
+        System.out.println("\n测试 storeFence (写屏障)");
+        unsafe.storeFence();
+        unsafe.putInt(obj, intValueOffset, 99);
+        System.out.println("写入后读取值: " + unsafe.getInt(obj, intValueOffset));
+
+        System.out.println("\n测试 fullFence (全屏障)");
+        unsafe.fullFence();
+        unsafe.putInt(obj, intValueOffset, 100);
+        unsafe.fullFence();
+        System.out.println("全屏障后读取值: " + unsafe.getInt(obj, intValueOffset));
+
+        System.out.println("\n多线程演示内存屏障作用:");
+        obj.intValue = 0;
+        Thread writer = new Thread(() -> {
+            try {
+                TimeUnit.MILLISECONDS.sleep(100);
+                unsafe.putInt(obj, intValueOffset, 1);
+                unsafe.storeFence();
+                System.out.println("写线程: 设置值为 1 (带 storeFence)");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        Thread reader = new Thread(() -> {
+            while (true) {
+                unsafe.loadFence();
+                int val = unsafe.getInt(obj, intValueOffset);
+                if (val == 1) {
+                    System.out.println("读线程: 读取到值 1 (带 loadFence)");
+                    break;
+                }
+            }
+        });
+
+        reader.start();
+        writer.start();
+        writer.join();
+        reader.join();
     }
 }
