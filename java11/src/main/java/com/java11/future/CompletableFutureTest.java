@@ -7,7 +7,6 @@ import java.util.concurrent.CompletableFuture;
 
 public class CompletableFutureTest {
     public static void main(String[] args) {
-        System.out.println(Runtime.getRuntime().availableProcessors());
         allOfTest();
     }
 
@@ -34,9 +33,10 @@ public class CompletableFutureTest {
             System.out.println("futureT2.join() = " + futureT2.join());
         });
 // 等待所有任务完成，验证效果, join()方法会阻塞，直到所有任务完成
-//        completableFuture.join();
+        completableFuture.join();
         System.out.println("main thread start sleep. Current time：" + DateUtil.now());
         ThreadUtil.sleep(5000);
+
         System.out.println("All tasks completed. Current time：" + DateUtil.now());
     }
 }
