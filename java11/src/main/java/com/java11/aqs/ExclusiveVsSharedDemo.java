@@ -15,7 +15,7 @@ public class ExclusiveVsSharedDemo {
         Runnable exclusiveTask = () -> {
             lock.lock();
             try {
-                System.out.println(Thread.currentThread().getName() + " 获取到独占锁，正在执行...");
+                System.out.println(Thread.currentThread().getName() + " test获取到独占锁，正在执行...");
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
