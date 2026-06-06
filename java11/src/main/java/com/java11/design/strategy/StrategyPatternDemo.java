@@ -31,30 +31,32 @@ public class StrategyPatternDemo {
         
         // 测试1: 使用支付宝支付
         System.out.println("测试1: 使用支付宝支付");
-        PaymentStrategy alipay = new AlipayStrategy("user@example.com", "张三");
+        PaymentStrategy alipay = PaymentStrategyFactory.getAlipayStrategy("user@example.com", "张三");
         paymentContext.setPaymentStrategy(alipay);
         paymentContext.executePayment(100.50);
         
         // 测试2: 使用微信支付
         System.out.println("测试2: 使用微信支付");
-        PaymentStrategy wechatPay = new WechatPayStrategy("13800138000", "李四");
+        PaymentStrategy wechatPay = PaymentStrategyFactory.getWechatPayStrategy("13800138000", "李四");
         paymentContext.setPaymentStrategy(wechatPay);
         paymentContext.executePayment(200.00);
         
         // 测试3: 使用信用卡支付
         System.out.println("测试3: 使用信用卡支付");
-        PaymentStrategy creditCard = new CreditCardStrategy("1234567890123456", "123", "12/25", "王五");
+        PaymentStrategy creditCard = PaymentStrategyFactory.getCreditCardStrategy("1234567890123456", "123", "12/25", "王五");
         paymentContext.setPaymentStrategy(creditCard);
         paymentContext.executePayment(500.75);
         
         // 测试4: 动态切换策略 - 同一用户选择不同的支付方式
-        System.out.println("测试4: 动态切换支付策略");
+        System.out.println("测试4: 动态切换支付策略（工厂缓存实例复用）");
         System.out.println("第一次购买 - 使用支付宝:");
-        paymentContext.setPaymentStrategy(new AlipayStrategy("user@example.com", "张三"));
+        PaymentStrategy sameAlipay = PaymentStrategyFactory.getAlipayStrategy("user@example.com", "张三");
+        System.out.println("   实例复用? " + (alipay == sameAlipay));
+        paymentContext.setPaymentStrategy(sameAlipay);
         paymentContext.executePayment(50.00);
         
         System.out.println("第二次购买 - 切换为微信支付:");
-        paymentContext.setPaymentStrategy(new WechatPayStrategy("13800138000", "张三"));
+        paymentContext.setPaymentStrategy(PaymentStrategyFactory.getWechatPayStrategy("13800138000", "张三"));
         paymentContext.executePayment(80.00);
         
         System.out.println("========== 演示结束 ==========");
