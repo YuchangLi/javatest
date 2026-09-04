@@ -56,14 +56,14 @@ public class TtlContextHolder {
 //        System.out.println("\n========== 测试2: 三种 ThreadLocal 在手动创建线程中的对比 ==========\n");
 //        testThreeThreadLocalsInManualThread();
 //
-//        System.out.println("\n========== 测试3: TTL 在任务提交时捕获上下文(核心特性) ==========\n");
-//        testCaptureAtSubmitTime();
+        System.out.println("\n========== 测试3: TTL 在任务提交时捕获上下文(核心特性) ==========\n");
+        testCaptureAtSubmitTime();
 
 //        System.out.println("\n========== 测试4: 父线程修改上下文，已运行的子线程能否感知? ==========\n");
 //        testModifyContextWithoutResubmit();
 
-        System.out.println("\n========== 测试5: TTL 支持异步嵌套传递 ==========\n");
-        testNestedAsync();
+//        System.out.println("\n========== 测试5: TTL 支持异步嵌套传递 ==========\n");
+//        testNestedAsync();
 
         // 关闭线程池
         TTL_EXECUTOR_SERVICE.shutdown();
@@ -193,7 +193,7 @@ public class TtlContextHolder {
      */
     private static void testModifyContextWithoutResubmit() throws Exception {
         // 设置初始上下文
-        TTL_CONTEXT.set("initial-value");
+        TTL_CONTEXT.set("ttl-initial-value");
         ITL_CONTEXT.set("itl-initial-value");
         log.info("[主线程] 设置初始上下文: TTL={}, ITL={}", TTL_CONTEXT.get(), ITL_CONTEXT.get());
 
@@ -213,7 +213,7 @@ public class TtlContextHolder {
             // 再次读取上下文
             log.info("[TTL子线程] 等待后再次读取上下文: {}", TTL_CONTEXT.get());
             log.info("[TTL子线程] 是否能读到父线程的修改? {}", 
-                    "initial-value".equals(TTL_CONTEXT.get()) ? "❌ 不能，还是旧值" : "✅ 能，读到新值");
+                    "ttl-initial-value".equals(TTL_CONTEXT.get()) ? "❌ 不能，还是旧值" : "✅ 能，读到新值");
         });
 
         // 提交一个长时间运行的任务到普通线程池（ITL）
